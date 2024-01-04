@@ -17,16 +17,18 @@ class Player {
       this.sideName=sideName;
     }
     async move(cell){
-        if (fieldArr.length==0){
+        if (winFlag!='false')
+            return
+        if (fieldArr.length==0||winFlag=='draw'){
             alert ('draw')
-            this.newGamePrep();    
+            setTimeout(()=>this.newGamePrep(), 200);  
             return
         }
         if(typeof field[cell] === "undefined"){
             field[cell]=this.sideName;
             fieldArr.splice(fieldArr.indexOf(cell), 1);
             await document.getElementById(cell).appendChild(this.side.cloneNode(true))
-            this.checkWin(field);
+            this.checkWin();
             return
         }
     }
@@ -39,13 +41,17 @@ class Player {
             (field["r3c1"]==field["r3c2"] && field["r3c1"]==field["r3c3"]&& field["r3c3"] == this.sideName)||
             (field["r1c1"]==field["r2c2"] && field["r1c1"]==field["r3c3"]&& field["r3c3"] == this.sideName)||
             (field["r1c3"]==field["r2c2"] && field["r2c2"]==field["r3c1"]&& field["r3c1"] == this.sideName)){
+                winFlag='true';
                 setTimeout(()=>alert(this.sideName + " win"), 100);
                 setTimeout(()=>this.newGamePrep(), 200);
-                return 'win'
+                return 
         }
-        return 'continue'
+        if(fieldArr.length==0)
+            alert ('draw');
+        return 
     }
     newGamePrep(){
+        winFlag='false'
         fieldArr=[]
         for (var prop in field) {
             fieldArr.push(prop)
@@ -62,9 +68,14 @@ class Player {
 
     }
 }
+winFlag='false';
 Player1=new Player(tic, 'tic');
 PlayerBot = new Player(tac, 'tac');
 
+async function makeMove(id){
+    if(fieldArr.indexOf(id)!=-1)
+        await Player1.move(id).then(()=>PlayerBot.move(RandomMove()))
+}
 
 tac.onclick=function(){ChooseTurn(tac, 'tac', tic, 'tic')};
 document.body.append(tac);
