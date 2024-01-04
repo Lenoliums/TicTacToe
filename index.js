@@ -16,18 +16,14 @@ class Player {
       this.side = side;
       this.sideName=sideName;
     }
-    async move(cell){
-        if (winFlag!='false')
-            return
-        if (fieldArr.length==0||winFlag=='draw'){
-            alert ('draw')
-            setTimeout(()=>this.newGamePrep(), 200);  
+    move(cell){
+        if (winFlag){
             return
         }
         if(typeof field[cell] === "undefined"){
             field[cell]=this.sideName;
             fieldArr.splice(fieldArr.indexOf(cell), 1);
-            await document.getElementById(cell).appendChild(this.side.cloneNode(true))
+            document.getElementById(cell).appendChild(this.side.cloneNode(true));
             this.checkWin();
             return
         }
@@ -43,16 +39,20 @@ class Player {
             (field["r1c3"]==field["r2c2"] && field["r2c2"]==field["r3c1"]&& field["r3c1"] == this.sideName)){
                 winFlag='true';
                 setTimeout(()=>alert(this.sideName + " win"), 100);
-                setTimeout(()=>this.newGamePrep(), 200);
+                setTimeout(()=>this.newGamePrep(), 500);
                 return 
         }
-        if(fieldArr.length==0)
-            alert ('draw');
-        return 
+        if(fieldArr.length==0){
+            winFlag=true;
+            setTimeout(() => alert('draw'), 100);
+            setTimeout(()=>this.newGamePrep(), 500);  
+            return
+        }
+        return
     }
     newGamePrep(){
-        winFlag='false'
-        fieldArr=[]
+        winFlag=false;
+        fieldArr=[];
         for (var prop in field) {
             fieldArr.push(prop)
             field[prop]=undefined;
@@ -68,13 +68,15 @@ class Player {
 
     }
 }
-winFlag='false';
+winFlag=false;
 Player1=new Player(tic, 'tic');
 PlayerBot = new Player(tac, 'tac');
 
 async function makeMove(id){
-    if(fieldArr.indexOf(id)!=-1)
-        await Player1.move(id).then(()=>PlayerBot.move(RandomMove()))
+    if(fieldArr.indexOf(id)!=-1){
+        Player1.move(id);
+        PlayerBot.move(RandomMove());
+    }
 }
 
 tac.onclick=function(){ChooseTurn(tac, 'tac', tic, 'tic')};
