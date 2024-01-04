@@ -1,0 +1,25 @@
+.tac{
+    border:10px solid rgb(0, 0, 255);
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+}
+.tic{
+    background: red;
+    width: 45px;
+    height: 45px;
+    clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+}
+
+
+td{
+    width: 45px;
+    height: 45px;
+}
+.secCol{
+    border-left: 2px solid black;
+    border-right: 2px solid black;}
+.secRow{
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}

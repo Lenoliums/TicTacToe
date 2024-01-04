@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+
+    <table>
+        <tr>
+          <td id="r1c1" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+          </td>
+          <td id="r1c2" class="secCol" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+          </td>
+          <td id="r1c3" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+          </td>
+        </tr>
+        <tr>
+            <td id="r2c1" class="secRow" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+            </td>
+            <td id="r2c2" class="secCol secRow" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+            </td>
+            <td id="r2c3" class="secRow" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+            </td>
+        </tr>
+        <tr>
+            <td id="r3c1" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+            </td>
+            <td id="r3c2" class="secCol" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+            </td>
+            <td id="r3c3" onclick="if(fieldArr.indexOf(this.id)!=-1)Player1.move(this.id).then(PlayerBot.move(RandomMove()))">
+            </td>
+        </tr>
+      </table>
+      
+    
+
+    <script src="index.js"></script>
+
+</body>
+</html>
