@@ -25,6 +25,7 @@ class Player {
             fieldArr.splice(fieldArr.indexOf(cell), 1);
             document.getElementById(cell).appendChild(this.side.cloneNode(true));
             this.checkWin();
+            makeChooseMessage.style.display='none';
             return
         }
     }
@@ -63,6 +64,7 @@ class Player {
             if (childrens.length!=0)
                 childrens[childrens.length-1].remove();
         }
+        makeChooseMessage.style.display='block';
         document.getElementById("chooseTac").style.display="none";
         document.getElementById("chooseTic").style.display="none";
 
@@ -78,6 +80,10 @@ async function makeMove(id){
         PlayerBot.move(RandomMove());
     }
 }
+let makeChooseMessage = document.createElement('span');
+makeChooseMessage.innerHTML="You can choose your side"
+makeChooseMessage.id="makeChooseMessage"
+document.body.append(makeChooseMessage);
 
 tac.onclick=function(){ChooseTurn(tac, 'tac', tic, 'tic')};
 document.body.append(tac);
@@ -104,9 +110,12 @@ function ChooseTurn(side, sideName, anSide,  anSideName){
         if(sideName=='tac'){
             PlayerBot.move(RandomMove());
             document.getElementById("chooseTac").style.display="block";
+            document.getElementById("chooseTic").style.display="none";
         }
-        else
-            document.getElementById("chooseTic").style.display="block"
+        else{
+            document.getElementById("chooseTic").style.display="block";
+            document.getElementById("chooseTac").style.display="none";
+        }
     }
 }
 
