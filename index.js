@@ -1,15 +1,8 @@
 const field = {r1c1: undefined, r1c2: undefined, r1c3: undefined, r2c1: undefined, r2c2: undefined, r2c3: undefined,r3c1: undefined, r3c2: undefined, r3c3: undefined}
-let fieldArr=[]
+let fieldArr=[];
 for(let prop in field){
-    fieldArr.push(prop)
+    fieldArr.push(prop);
 }
-
-let tac = document.createElement('div');
-tac.classList.add("tac");
-
-
-let tic = document.createElement('div');
-tic.classList.add("tic");
 
 class Player {
     constructor(side, sideName) {
@@ -23,7 +16,10 @@ class Player {
         if(typeof field[cell] === "undefined"){
             field[cell]=this.sideName;
             fieldArr.splice(fieldArr.indexOf(cell), 1);
-            document.getElementById(cell).appendChild(this.side.cloneNode(true));
+            let conteriner = document.createElement('div');
+            conteriner.classList.add('cont');
+            document.getElementById(cell).appendChild(conteriner);
+            conteriner.appendChild(this.side.cloneNode(true));
             this.checkWin();
             makeChooseMessage.style.display='none';
             return
@@ -65,11 +61,11 @@ class Player {
                 childrens[childrens.length-1].remove();
         }
         makeChooseMessage.style.display='block';
-        document.getElementById("chooseTac").style.display="none";
-        document.getElementById("chooseTic").style.display="none";
-
     }
 }
+
+let tac = document.getElementsByClassName('tac')[0];
+let tic = document.getElementsByClassName('tic')[0]
 winFlag=false;
 Player1=new Player(tic, 'tic');
 PlayerBot = new Player(tac, 'tac');
@@ -80,26 +76,6 @@ async function makeMove(id){
         PlayerBot.move(RandomMove());
     }
 }
-let makeChooseMessage = document.createElement('span');
-makeChooseMessage.innerHTML="You can choose your side"
-makeChooseMessage.id="makeChooseMessage"
-document.body.append(makeChooseMessage);
-
-tac.onclick=function(){ChooseTurn(tac, 'tac', tic, 'tic')};
-document.body.append(tac);
-let chooseTac = document.createElement('span');
-chooseTac.innerHTML="Tac chosen"
-chooseTac.id="chooseTac"
-chooseTac.style.display='none'
-document.body.append(chooseTac);
-
-tic.onclick=function(){ChooseTurn(tic, 'tic', tac, 'tac')};
-document.body.append(tic);
-let chooseTic = document.createElement('span');
-chooseTic.innerHTML="Tic chosen"
-chooseTic.id="chooseTic"
-chooseTic.style.display='none'
-document.body.append(chooseTic);
 
 function ChooseTurn(side, sideName, anSide,  anSideName){
     if(fieldArr.length==9){
@@ -108,9 +84,9 @@ function ChooseTurn(side, sideName, anSide,  anSideName){
         PlayerBot.side=anSide;
         PlayerBot.sideName=anSideName;
         if(sideName=='tac'){
-            PlayerBot.move(RandomMove());
             document.getElementById("chooseTac").style.display="block";
             document.getElementById("chooseTic").style.display="none";
+            PlayerBot.move(RandomMove());
         }
         else{
             document.getElementById("chooseTic").style.display="block";
